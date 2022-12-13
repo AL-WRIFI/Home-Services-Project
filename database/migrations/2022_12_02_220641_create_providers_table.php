@@ -24,10 +24,13 @@ return new class extends Migration
             $table->string('address');
             $table->foreignId('category_id')->constrained('categories', 'id')->nullable()->OnDelete('null');
             $table->string('description')->nullable();
+            $table->string('identity_type')->nullable();
+            $table->integer('identity_Number')->nullable();
+            $table->string('identification_Image')->nullable();
             $table->integer('order_count')->unsigned()->default(0);
             $table->integer('rating_count')->unsigned()->default(0);
             $table->float('avg_rating',8,4)->default(0);
-            $table->enum('status', ['active', 'inactive'])->nullable()->default('active');
+            $table->boolean('status')->default(1);
             $table->boolean('featured')->nullable()->default(0);
             $table->boolean('accepted')->default(1);
             $table->timestamps();

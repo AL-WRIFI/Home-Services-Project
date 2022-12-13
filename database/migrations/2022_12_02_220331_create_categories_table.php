@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('image')->nullable();
             $table->string('slug')->index()->nullbale();
-            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
        

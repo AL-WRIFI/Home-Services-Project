@@ -111,7 +111,7 @@
                     </a>
                     <!-- Sub Menu -->
                     <ul class="nav sub-menu">
-                        <li><a href=""
+                        <li><a href="{{route('orders.index')}}"
                                class="{{request()->is('admin/booking/list') && request()->query('booking_status')=='pending'?'active-menu':''}}"><span
                                     class="link-title">Booking Requests <span
                                         class="count"></span></span></a>

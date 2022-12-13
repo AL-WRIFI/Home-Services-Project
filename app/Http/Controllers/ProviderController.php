@@ -25,6 +25,7 @@ class ProviderController extends Controller
         $top_cards['total_notaccepted_providers'] =$provider->where(['accepted' => 0])->count();
         $top_cards['total_active_providers'] = $provider->where(['status' => 1])->count();
         $top_cards['total_inactive_providers'] = $provider->where(['status' => 0])->count();
+        
         return view('admin.Provider.index', compact('providers','top_cards'));
     }
 

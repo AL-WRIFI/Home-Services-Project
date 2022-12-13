@@ -21,7 +21,7 @@ return new class extends Migration
             $table->double('price');
             $table->string("image")->nullable();
             $table->boolean('featured')->nullable()->default(0);
-            $table->enum('status', ['active', 'inactive'])->nullable()->default('active');
+            $table->boolean('status')->default(1);           
             $table->timestamps();
         });
     }
