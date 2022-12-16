@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
 class CategoryController extends Controller
 {
     /**
@@ -38,9 +38,14 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name'=>'required',
-            'description'=>'required'
+            'description'=>'required',
+            'image'=>'required'
         ]);
-        $category = Category::create($request->all());
+
+        $data =$request->except('image');
+        $data['image'] = $this->uploadImgae($request);
+
+        $category = Category::create($data);
         return redirect()->route('categories.index')
         ->with('success', 'Create Category Successflly');
     }
@@ -80,11 +85,23 @@ class CategoryController extends Controller
             'name'=>'required',
             'description'=>'required'
         ]);
-        $category->update([
-            'name' => $request->name,
-            'description' => $request->description
-        ]);
-        return redirect()->route('categories.index')->with('success', 'Update Category Successflly');
+
+        $data = $request->except('image'); 
+
+        $old_image = $category->image;
+        $new_image = $this->uploadImgae($request);
+
+        if($new_image){
+            $data['image'] = $new_image;
+        }
+
+        $category->update($data);
+
+        if ($old_image && $new_image) {
+            Storage::disk('public')->delete($old_image);
+        }
+        return redirect()->route('categories.index')
+        ->with('success', 'Update Category Successflly');
     }
 
     /**
@@ -96,6 +113,22 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
+        if ($category->image) {
+            Storage::disk('public')->delete($category->image);
+        }
         return redirect()->route('categories.index')->with('success','Delete Category Successflly');
+    }
+
+    protected function uploadImgae(Request $request){
+     
+        if(!$request->hasFile('image')){
+            return;
+        }
+        $file =$request->file('image');
+
+        $path = $file->store('uploads', [
+            'disk' => 'public'
+        ]);
+        return $path;
     }
 }

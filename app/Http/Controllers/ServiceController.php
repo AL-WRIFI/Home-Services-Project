@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class ServiceController extends Controller
 {
@@ -66,9 +68,14 @@ class ServiceController extends Controller
             'name'=>'required',
             'category_id'=>'required',
             'description'=>'required',
+            'image'=>'required',
             'price'=>'required'
         ]);
-        $service = Service::create($request->all());
+
+        $data = $request->except('image');
+        $data['image'] = $this->uploadImage($request);
+    
+        $service = Service::create($data);
         return redirect()->route('services.index')
             ->with('success','Service Create Successflly');
     }
@@ -110,11 +117,21 @@ class ServiceController extends Controller
             'description'=>'required',
             'price'=>'required'
         ]);
-        $service->update([
-            'name' => $request->name,
-            'description' => $request->description,
-            'price'=>$request->price
-        ]);
+
+        $data = $request->except('image');
+
+        $old_image = $service->image;
+        $new_image = $this->uploadImage($request);
+
+        if($new_image){
+            $data['image'] = $new_image;
+        }
+
+        $service->update($data);
+
+        if($old_image && $new_image){
+            Storage::disk('public')->delete($old_image);
+        }
         return redirect()->route('services.index')
             ->with('success','Service Update Successflly');
     }
@@ -127,7 +144,25 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
+
         $service->delete();
+        if ($service->image) {
+            Storage::disk('public')->delete($service->image);
+        }
         return redirect()->route('services.index')->with('success', 'Service Delete Successflly');
     }
+
+    protected function uploadImage(Request $request){
+        if(!$request->hasFile('image')){
+            return;
+        }
+        $file =$request->file('image');
+
+        $path = $file->store('uploads', [
+            'disk' => 'public'
+        ]);
+        return $path;
+
+       
+    } 
 }

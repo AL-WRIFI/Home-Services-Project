@@ -55,11 +55,11 @@
                                                 </p>
                                             <div>
                                                 <div class="upload-file">
-                                                    <input type="file" class="upload-file__input" name="image">
+                                                    <input type="file" class="upload-file__input" name="image" >
                                                     <div class="upload-file__img">
                                                         <img
                                                             onerror=""
-                                                            src="{{asset('assets/admin-module')}}/img/media/upload-file.png"
+                                                            src="{{asset('storage/app/public/uploads/TtkkUnELaTafd71Ms9hsSTcXOHY50NttrJI3kKsb.jpg')}}"
                                                             alt="">
                                                     </div>
                                                     <span class="upload-file__edit">

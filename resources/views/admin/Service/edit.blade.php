@@ -57,7 +57,7 @@
                                                     <div>
                                                         <div class="upload-file">
                                                             <input type="file" class="upload-file__input"
-                                                                   name="thumbnail">
+                                                                   name="image">
                                                             <div class="upload-file__img">
                                                                 <img
                                                                     src="{{asset('assets/admin-module')}}/img/media/upload-file.png"

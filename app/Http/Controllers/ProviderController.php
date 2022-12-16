@@ -58,7 +58,9 @@ class ProviderController extends Controller
          'category_id'=>'required',
          'description'=>'required'
         ]);
-        $provider = Provider::create($request->all());
+        $data =$request->except('image');
+        $data['image'] = $this->uploadImgae($request);
+        $provider = Provider::create($data);
         return redirect()->route('providers.index')
             ->with('success', 'Create Provider Successflly');
     }
@@ -105,9 +107,22 @@ class ProviderController extends Controller
             'category_id'=>'required',
             'description'=>'required'
            ]);
-           $provider->update($request->all());
-           return redirect()->route('providers.index')
-               ->with('success', 'Update Provider Successflly');
+    
+        $data = $request->except('image'); 
+        $old_image = $provider->image;
+
+        $new_image = $this->uploadImgae($request);
+
+        if($new_image){
+            $data['image'] = $new_image;
+        }
+
+        $provider->update($data);
+        if ($old_image && $new_image) {
+            Storage::disk('public')->delete($old_image);
+        } 
+        return redirect()->route('providers.index')
+           ->with('success', 'Update Provider Successflly');
     }
     public function status_update($id): JsonResponse
     {
@@ -126,7 +141,23 @@ class ProviderController extends Controller
     public function destroy(Provider $provider)
     {
         $provider->delete();
+        if ($provider->image) {
+            Storage::disk('public')->delete($provider->image);
+        }
         return redirect()->route('providers.index')
             ->with('success', 'Delete Provider Successflly');
     }
+    protected function uploadImgae(Request $request){
+     
+        if(!$request->hasFile('image')){
+            return;
+        }
+        $file =$request->file('image');
+
+        $path = $file->store('uploads', [
+            'disk' => 'public'
+        ]);
+        return $path;
+    }
 }
+

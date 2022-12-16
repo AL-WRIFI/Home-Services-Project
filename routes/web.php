@@ -21,6 +21,10 @@ Route::get('/', function () {
     return view('dashboard');
 });
 
+Route::get('/home', function () {
+    return view('index');
+});
+
 Route::resource('categories', CategoryController::class);
 Route::resource('services', ServiceController::class);
 Route::resource('providers', ProviderController::class);
