@@ -13,8 +13,8 @@
     
         <!-- Team item-->
         <div class="col-xl-3 col-sm-6 mb-5">
-          <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{{asset('storage/'.$category->image)}}" alt="" width="130" class="img-fluid  img-thumbnail shadow-sm">
-            <h5 class="mb-0">{{$category->name}}</h5><span class="small text-uppercase text-muted">CEO - Founder</span>
+          <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{{asset('storage/'.$category->image)}}" alt="" max-width="50px" class="img-fluid  img-thumbnail shadow-sm">
+           <a href="{{route('show_services',[$category->id])}}"><h5 class="mb-0">{{$category->name}}</h5><span class="small text-uppercase text-muted">CEO - Founder</span></a> 
             <ul class="social mb-0 list-inline mt-3">
               <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-facebook-f"></i></a></li>
               <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-twitter"></i></a></li>

@@ -15,6 +15,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::withCount('services')->paginate(10);
+
         return view('admin.Category.list', compact('categories'));
     }
 
@@ -69,6 +70,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
+
         return view('admin.Category.edit', compact('category'));
     }
 
@@ -83,7 +85,8 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name'=>'required',
-            'description'=>'required'
+            'description'=>'required',
+            'image'=>'requierd'
         ]);
 
         $data = $request->except('image'); 
@@ -95,6 +98,10 @@ class CategoryController extends Controller
             $data['image'] = $new_image;
         }
 
+  
+        // Category::update([
+        //     'name' => $request->name,
+        // ])->where('id', $this->$category->id);
         $category->update($data);
 
         if ($old_image && $new_image) {
@@ -113,9 +120,11 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        if ($category->image) {
-            Storage::disk('public')->delete($category->image);
-        }
+
+
+        // if ($category->image) {
+        //     Storage::disk('public')->delete($category->image);
+        // }
         return redirect()->route('categories.index')->with('success','Delete Category Successflly');
     }
 

@@ -28,7 +28,7 @@
                                         <div class="d-flex flex-column">
                                             <div class="form-floating mb-30">
                                                 <input type="text" name="name" class="form-control"
-                                                       value="{{$category['name']}}"
+                                                       value="{{$category->name}}"
                                                        placeholder="category_---name" required>
                                                 <label>Category Name</label>
                                             </div>
