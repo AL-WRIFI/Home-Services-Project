@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ServiceController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\ProviderController;
 use App\Http\Livewire\Home;
 use App\Http\Livewire\Order;
 use App\Http\livewire\ShowService;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,9 +24,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-
 
 Route::resource('categories', CategoryController::class);
 Route::resource('services', ServiceController::class);
@@ -76,3 +86,5 @@ Route::get('/home', App\Http\Livewire\Home::class);
 //         Route::any('products/{products}/delete', 'delete');
 //     });
 // });
+
+require __DIR__.'/auth.php';

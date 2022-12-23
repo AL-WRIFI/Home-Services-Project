@@ -15,14 +15,10 @@ return new class extends Migration
     {
         Schema::create('providers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users', 'id')->OnDelete('cascade');
-            $table->string('name', 255);
-            $table->string('image')->nullable();
+            $table->foreignId('user_id')->constrained('users', 'id')->cascadeOnDelete();
             $table->string('phone')->nullable()->unique();
-            $table->string('email')->unique();
-            $table->string('password');
             $table->string('address');
-            $table->foreignId('category_id')->constrained('categories', 'id')->nullable()->OnDelete('null');
+            $table->foreignId('category_id')->nullable()->constrained('categories', 'id')->nullOnDelete();
             $table->string('description')->nullable();
             $table->string('identity_type')->nullable();
             $table->integer('identity_Number')->nullable();

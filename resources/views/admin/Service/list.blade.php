@@ -119,19 +119,22 @@
                                                                class="table-actions_edit demo_check">
                                                                 <span class="material-icons">edit</span>
                                                             </a>
-                                                            <button type="button"
-                                                                    @if(env('APP_ENV')!='demo')
-                                                                    onclick="form_alert('delete-{{$service->id}}','want to delete this service?')"
-                                                                    @endif
-                                                                    class="table-actions_delete bg-transparent border-0 p-0 demo_check">
-                                                                <span class="material-icons">delete</span>
-                                                            </button>
+                                                            <a href="{{route('services.destroy',[$service->id])}}"
+                                                               class="table-actions_delete bg-transparent border-0 p-0 demo_check">
+                                                                <span class="material-icons">edit</span>
+                                                            </a>
+                                                            
                                                             <form
                                                                 action="{{route('services.destroy',[$service->id])}}"
                                                                 method="post" id="delete-{{$service->id}}"
                                                                 class="hidden">
                                                                 @csrf
                                                                 @method('DELETE')
+                                                                <button type="submit"                                                                 
+                                                                class="table-actions_delete bg-transparent border-0 p-0 demo_check">
+                                                               <span class="material-icons">delete</span>
+                                                           </button>
+                                                                
                                                             </form>
                                                         </div>
                                                     </td>
@@ -154,12 +157,5 @@
 @endsection
 
 @push('script')
-    <script src="{{asset('assets/admin-module')}}/plugins/select2/select2.min.js"></script>  
-    <script>
-        $(document).ready(function () {
-            $('.js-select').select2();
-        });
-    </script>
-    <script src="{{asset('assets/admin-module')}}/plugins/dataTables/jquery.dataTables.min.js"></script>
-    <script src="{{asset('assets/admin-module')}}/plugins/dataTables/dataTables.select.min.js"></script>
+    
 @endpush

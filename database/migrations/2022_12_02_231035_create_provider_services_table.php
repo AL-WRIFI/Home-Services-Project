@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('provider_services', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('provider_id')->constrained('providers', 'id')->OnDelete('cascade');
-            $table->foreignId('service_id')->constrained('services', 'id')->OnDelete('cascade');
+            $table->foreignId('provider_id')->constrained('providers', 'id')->cascadeOnDelete();
+            $table->foreignId('service_id')->constrained('services', 'id')->cascadeOnDelete();
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

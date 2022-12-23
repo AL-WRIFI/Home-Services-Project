@@ -103,17 +103,18 @@
                                                                class="table-actions_edit demo_check">
                                                                 <span class="material-icons">edit</span>
                                                             </a>
-                                                            <button type="button"
-                                                                    @if(env('APP_ENV')!='demo')
-                                                                    onclick="form_alert('delete-{{$category->id}}','Wnt To Delete This Category?')"
-                                                                    @endif
-                                                                    class="table-actions_delete bg-transparent border-0 p-0 demo_check">
-                                                                <span class="material-icons">delete</span>
-                                                            </button>
+                                                            
                                                             <form action="{{route('categories.destroy',[$category->id])}}"
                                                                   method="post" id="delete-{{$category->id}}" class="hidden">
                                                                 @csrf
                                                                 @method('DELETE')
+                                                                <button type="submit"
+                                                                  
+                                                                   
+                                                                   
+                                                                    class="table-actions_delete bg-transparent border-0 p-0 demo_check">
+                                                                <span class="material-icons">delete</span>
+                                                            </button>
                                                             </form>
                                                         </div>
                                                     </td>

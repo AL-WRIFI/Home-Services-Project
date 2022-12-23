@@ -59,7 +59,7 @@
                                        class="dropdown-item-text media gap-3 align-items-center">
                                         <div class="avatar">
                                             <img class="avatar-img rounded-circle" width="50" height="50"
-                                                 src=""
+                                                 src="{{asset('storage/'.Auth::user()->image)}}"
                                                  onerror=""
                                                  alt="">
                                         </div>
@@ -71,9 +71,15 @@
                                     <a class="dropdown-item" href="">
                                         <span class="text-truncate" title="Settings">Settings</span>
                                     </a>
-                                    <a class="dropdown-item" href="">
-                                        <span class="text-truncate" title="Sign Out">Sign Out</span>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    @method('post')
+                                    <a class="dropdown-item" :href="route('logout')"
+                                    onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                    <span class="text-truncate" title="Sign Out">Sign Out</span>
                                     </a>
+                                   </form>
                                 </div>
                             </div>
                             <!-- End User -->

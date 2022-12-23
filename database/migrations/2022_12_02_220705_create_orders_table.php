@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();  
-            $table->foreignId('user_id')->constrained('users','id')->OnDelete('cascade');
-            $table->foreignId('category_id')->constrained('categories', 'id')->nullable()->OnDelete('null');
-            $table->foreignId('provider_id')->constrained('providers', 'id')->nullable()->OnDelete('null');  
+            $table->foreignId('user_id')->constrained('users','id')->cascadeOnDelete();
+            $table->foreignId('category_id')->nullable()->constrained('categories', 'id')->nullOnDelete();
+            $table->foreignId('provider_id')->nullable()->constrained('providers', 'id')->nullOnDelete();  
             $table->text('note')->nullable();     
             $table->string('address')->nullable();
             $table->bigInteger('service_address_id')->nullable();
