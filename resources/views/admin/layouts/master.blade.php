@@ -46,6 +46,7 @@
     <!-- ======= END MAIN STYLES ======= -->
 
     @stack('css_or_js')
+    @livewireStyles
 </head>
 
 <body>
@@ -102,160 +103,9 @@
 <script src="{{asset('assets/admin-module')}}/js/dev.js"></script>
 
 
-@if ($errors->any())
-    <script>
-        @foreach($errors->all() as $error)
-        toastr.error('{{$error}}', Error, {
-            CloseButton: true,
-            ProgressBar: true
-        });
-        @endforeach
-    </script>
-@endif
-
-<script>
-    function form_alert(id, message) {
-        Swal.fire({
-            title: "are_you_sure?",
-            text: message,
-            type: 'warning',
-            showCloseButton: true,
-            showCancelButton: true,
-            cancelButtonColor: 'var(--c2)',
-            confirmButtonColor: 'var(--c1)',
-            cancelButtonText: 'Cancel',
-            confirmButtonText: 'Yes',
-            reverseButtons: true
-        }).then((result) => {
-            if (result.value) {
-                $('#' + id).submit()
-            }
-        })
-    }
-
-    function route_alert(route, message) {
-        Swal.fire({
-            title: "are_you_sure?",
-            text: message,
-            type: 'warning',
-            showCancelButton: true,
-            cancelButtonColor: 'var(--c2)',
-            confirmButtonColor: 'var(--c1)',
-            cancelButtonText: 'Cancel',
-            confirmButtonText: 'Yes',
-            reverseButtons: true
-        }).then((result) => {
-            if (result.value) {
-                $.get({
-                    url: route,
-                    dataType: 'json',
-                    data: {},
-                    beforeSend: function () {
-                        /*$('#loading').show();*/
-                    },
-                    success: function (data) {
-                        toastr.success(data.message, {
-                            CloseButton: true,
-                            ProgressBar: true
-                        });
-                    },
-                    complete: function () {
-                        /*$('#loading').hide();*/
-                    },
-                });
-            }
-        })
-    }
-
-    function route_alert_reload(route, message, reload = true) {
-        Swal.fire({
-            title: "are_you_sure?",
-            text: message,
-            type: 'warning',
-            showCancelButton: true,
-            cancelButtonColor: 'var(--c2)',
-            confirmButtonColor: 'var(--c1)',
-            cancelButtonText: 'Cancel',
-            confirmButtonText: 'Yes',
-            reverseButtons: true
-        }).then((result) => {
-            if (result.value) {
-                $.get({
-                    url: route,
-                    dataType: 'json',
-                    data: {},
-                    beforeSend: function () {
-                        /*$('#loading').show();*/
-                    },
-                    success: function (data) {
-                        if (reload) {
-                            location.reload();
-                        }
-                        toastr.success(data.message, {
-                            CloseButton: true,
-                            ProgressBar: true
-                        });
-                    },
-                    complete: function () {
-                        /*$('#loading').hide();*/
-                    },
-                });
-            }
-        })
-    }
-</script>
-
-<!-- Audio -->
-<audio id="audio-element">
-    <source src="{{asset('assets/provider-module')}}/sound/notification.mp3" type="audio/mpeg">
-</audio>
-<script>
-    var audio = document.getElementById("audio-element");
-
-    function playAudio(status) {
-        status ? audio.play() : audio.pause();
-    }
-</script>
-
-<script>
-    setInterval(function () {
-        $.get({
-            url: 'admin.get_updated_data',
-            dataType: 'json',
-            success: function (response) {
-                let data = response.data;
-                //update header count
-                document.getElementById("message_count").innerHTML = data.message;
-            },
-        });
-    }, 10000);
-</script>
 <!-- ======= END **AUTO RUNNABLE** SCRIPTS ======= -->
-
-<script>
-    $("#search-form__input").on("keyup", function () {
-        var value = this.value.toLowerCase().trim();
-        $(".show-search-result a").show().filter(function () {
-            return $(this).text().toLowerCase().trim().indexOf(value) == -1;
-        }).hide();
-    });
-
-    function demo_mode() {
-        toastr.info('This function is disable for demo mode', {
-            CloseButton: true,
-            ProgressBar: true
-        });
-    }
-
-    $('.demo_check').on('click', function (event) {
-        if ('{{env('APP_ENV')=='demo'}}') {
-            event.preventDefault();
-            demo_mode()
-        }
-    });
-</script>
-
 @stack('script')
+@livewireScripts
 <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
 </body>
 

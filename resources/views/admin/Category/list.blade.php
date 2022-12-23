@@ -92,12 +92,10 @@
                                                     <td>{{$category->name}}</td>
                                                     <td>{{$category->services_count}}</td>
                                                     <td>
-                                                        <label class="switcher" data-bs-toggle="modal"
-                                                               data-bs-target="#deactivateAlertModal">
-                                                            <input class="switcher_input" onclick=""
-                                                                   type="checkbox" {{$category->active?'checked':''}}>
-                                                            <span class="switcher_control"></span>
-                                                        </label>
+                                                        @livewire('status-form',[
+                                                            'model'=> $category,
+                                                            'field'=> 'status',
+                                                        ])
                                                     </td>
                                                     <td>
                                                         <div class="table-actions">

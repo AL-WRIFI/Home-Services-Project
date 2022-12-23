@@ -174,12 +174,11 @@
                                             </td>
                                             <td>{{$provider->order_count}}</td>
                                             <td>
-                                                <label class="switcher" data-bs-toggle="modal"
-                                                       data-bs-target="#deactivateAlertModal">
-                                                    <input class="switcher_input" onclick="route_alert('{{route('status_update', [$provider->id])}}','Want To Update Status')"
-                                                           type="checkbox" {{$provider->status?'checked':''}}>
-                                                    <span class="switcher_control"></span>
-                                                </label>
+                                                @livewire('status-form',[
+                                                            'model'=> $provider,
+                                                            'field'=> 'status',
+                                                        ])
+                                                        </label>
                                             </td>
                                             <td>
                                                 <div class="table-actions">
@@ -205,7 +204,7 @@
                                 </table>
                             </div>
                             <div class="d-flex justify-content-end">
-                               {!! $providers->links() !!}
+                    
                             </div>
                         </div>
                     </div>

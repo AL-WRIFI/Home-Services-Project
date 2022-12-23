@@ -107,12 +107,10 @@
                                                     </td>
                                                     
                                                     <td>
-                                                        <label class="switcher" data-bs-toggle="modal"
-                                                               data-bs-target="#deactivateAlertModal">
-                                                            <input class="switcher_input"
-                                                                   onclick="route_alert()"
-                                                                   type="checkbox" {{$service->active?'checked':''}}>
-                                                            <span class="switcher_control"></span>
+                                                        @livewire('status-form',[
+                                                            'model'=> $service,
+                                                            'field'=> 'status',
+                                                        ])
                                                         </label>
                                                     </td>
                                                     <td>
